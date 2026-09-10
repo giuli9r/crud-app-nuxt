@@ -88,3 +88,9 @@ export default {
 </script>
 
 <style lang="scss"></style>
+
+<!-- How this works
+ When a user fills out a form and hits create button the createEmployee methos is invoked  
+ then takes the employee object and pushes it to the employees array in local storage
+ then redirects the user to the (home page) employee list
+-->

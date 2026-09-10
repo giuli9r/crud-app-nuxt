@@ -1,81 +1,78 @@
 <template>
-    <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10 px-4">
         <div class="flex items-center justify-between mb-8">
-            <!-- <h1 class="text-2xl font-bold mb-6"> Employee</h1> -->
-            <NuxtLink to="/employee/create"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Add Employee
-            </NuxtLink>
-            <h1 class="text-3xl front-bold ml-4"> Employee managment system</h1>
+            <div class="flex space-x-4">
+                <NuxtLink to="/employee/create"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                    Add Employee
+                </NuxtLink>
+                <NuxtLink to="/employee/statistics"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                    Statistics
+                </NuxtLink>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800">Employee Management System</h1>
         </div>
-        <table class="text-left w-full border-collapse">
-            <thead>
-                <tr clas="bg-gray-200">
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        First Name</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Last Name</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Email</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Phone</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Job Title</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Department</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Salary</th>
-                    <th
-                        class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                        Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(employee, index) in employees" :key="employee.id" class="hover:bg-grey-lighter">
-                    <td class="py-4 px-6 border-b border-grey-light">{{ index + 1 }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.first_name }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.last_name }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.email }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.phone }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.job_title }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.department }}</td>
-                    <td class="py-4 px-6 border-b border-grey-light">{{ employee.salary }}</td>
-                </tr>
-            </tbody>
-        </table>
 
+        <!-- Responsive Table Wrapper -->
+        <div class="overflow-x-auto shadow rounded-lg border border-gray-200">
+            <table class="text-left w-full border-collapse bg-white">
+                <thead class="bg-gray-100 border-b border-gray-200">
+                    <tr>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">ID</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">First Name</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Last Name</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Email</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Phone</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Job Title</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Department</th>
+                        <th scope="col" class="py-3 px-4 font-bold uppercase text-xs text-gray-600">Salary</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr v-for="(employee, index) in employees" :key="employee.id || index"
+                        class="hover:bg-gray-50 transition">
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ index + 1 }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.first_name }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.last_name }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.email }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.phone }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.job_title }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.department }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ employee.salary }}</td>
+                    </tr>
+                    <!-- Empty State -->
+                    <tr v-if="employees.length === 0">
+                        <td colspan="8" class="text-center py-8 text-gray-500 text-sm">
+                            No employees found. Click "Add Employee" to create one.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-
     data() {
         return {
-            employees: [],
+            employees: []
         }
     },
     mounted() {
         this.loadEmployees();
     },
     methods: {
-        async loadEmployees() {
-            if (localStorage.getItem('employees')) {
-                this.employees = JSON.parse(localStorage.getItem('employees'));
+        loadEmployees() {
+            if (typeof window !== 'undefined' && localStorage.getItem('employees')) {
+                try {
+                    this.employees = JSON.parse(localStorage.getItem('employees'));
+                } catch (error) {
+                    console.error('Error reading employees from localStorage:', error);
+                }
             }
-            // this.items = await this.$axios.$get('/employees');
         }
     }
-
-
 }
 </script>
-
-<style lang="scss" scoped></style>
