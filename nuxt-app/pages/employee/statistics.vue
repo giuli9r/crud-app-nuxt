@@ -3,7 +3,7 @@
     <header class="page-header">
       <div>
         <p class="eyebrow">Management</p>
-        <h1>Employees</h1>
+        <h1>Statistics</h1>
       </div>
       <button class="primary-btn">+ Add employee</button>
     </header>
@@ -37,12 +37,12 @@
           </thead>
           <tbody>
             <tr v-for="employee in employees" :key="employee.id">
-              <td>{{ employee.name }}</td>
-              <td>{{ employee.role }}</td>
+              <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+              <td>{{ employee.job_title }}</td>
               <td>{{ employee.department }}</td>
               <td>
-                <span :class="['status', employee.status.toLowerCase()]">
-                  {{ employee.status }}
+                <span class="status active">
+                  Active
                 </span>
               </td>
             </tr>
@@ -55,38 +55,87 @@
         <form>
           <label>
             Full name
-            <input type="text" value="Jane Doe" />
+            <input type="text" v-model="employee.first_name" />
+          </label>
+          <label>
+            Last Name
+            <input type="text" v-model="employee.last_name" />
           </label>
           <label>
             Email
-            <input type="email" value="jane@company.com" />
+            <input type="email" v-model="employee.email" />
           </label>
           <label>
             Role
-            <input type="text" value="Product Designer" />
+            <input type="text" v-model="employee.job_title" />
           </label>
           <label>
             Department
-            <select>
+            <select v-model="employee.department">
               <option selected>Design</option>
               <option>Engineering</option>
               <option>Marketing</option>
             </select>
           </label>
-          <button type="button" class="primary-btn">Save employee</button>
+          <label>
+            Phone
+            <input type="text" v-model="employee.phone" />
+          </label>
+          <label>
+            Salary
+            <input type="text" v-model="employee.salary" />
+          </label>
+          <button type="button" class="primary-btn" @click="createEmployee">Save employee</button>
         </form>
       </aside>
     </section>
   </div>
 </template>
 
-<script setup>
-const employees = [
-  { id: 1, name: 'Jane Doe', role: 'Product Designer', department: 'Design', status: 'Active' },
-  { id: 2, name: 'Mark Lee', role: 'Frontend Engineer', department: 'Engineering', status: 'Active' },
-  { id: 3, name: 'Sarah Kim', role: 'Marketing Lead', department: 'Marketing', status: 'On Leave' },
-  { id: 4, name: 'David Cruz', role: 'Project Manager', department: 'Operations', status: 'Active' },
-]
+<script>
+export default {
+  data() {
+    return {
+      employees: [],
+      employee: {
+        id: Date.now(),
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        job_title: '',
+        department: '',
+        salary: ''
+      }
+    }
+  },
+  mounted() {
+    this.getEmployees();
+  },
+  methods: {
+    getEmployees() {
+      const employees = JSON.parse(localStorage.getItem('employees') || '[]');
+      this.employees = employees;
+    },
+    createEmployee() {
+      const existingEmployees = JSON.parse(localStorage.getItem('employees') || '[]');
+      existingEmployees.push(this.employee);
+      localStorage.setItem('employees', JSON.stringify(existingEmployees));
+      this.getEmployees();
+      this.employee = {
+        id: Date.now(),
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        job_title: '',
+        department: '',
+        salary: ''
+      }
+    }
+  }
+}
+
 </script>
 
 <style scoped>
