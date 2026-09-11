@@ -12,6 +12,7 @@
                     <NuxtLink to="/employee/employees">Employees</NuxtLink>
                 </li>
             </ul>
+            <v-btn color="" to="/weather">Check Weather!</v-btn>
         </nav>
     </header>
     <div class="container mx-auto p-4">
