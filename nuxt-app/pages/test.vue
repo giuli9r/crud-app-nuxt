@@ -1,4 +1,28 @@
 <template>
+
+    <div class="w-100 m-10">
+        <v-dialog max-width="500">
+            <template v-slot:activator="{ props: activatorProps }">
+                <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog" variant="flat"></v-btn>
+            </template>
+
+            <template v-slot:default="{ isActive }">
+                <v-card title="Dialog">
+                    <v-card-text>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+    </div>
+
     <div class="w-100 m-10">
         <v-card class="mx-auto" prepend-icon="$vuetify" subtitle="The #1 Vue UI Library" width="400">
             <template v-slot:title>
@@ -65,40 +89,6 @@
         </v-card>
     </div>
 
-    <div class="w-100 m-10">
-        <v-dialog max-width="500">
-            <template v-slot:activator="{ props: activatorProps }">
-                <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog" variant="flat"></v-btn>
-            </template>
-
-            <template v-slot:default="{ isActive }">
-                <v-card title="Dialog">
-                    <v-card-text>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-
-                        <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-    </div>
-
-    <div class="w-100 m-10">
-        <v-radio-group inline v-model="radios">
-            <template v-slot:label>
-                <div>Choose your browser</div>
-            </template>
-            <v-radio label="Chrome" value="1"></v-radio>
-            <v-radio label="Firefox" value="2"></v-radio>
-            <v-radio label="Safari" value="3"></v-radio>
-            <v-radio label="Edge" value="4"></v-radio>
-        </v-radio-group>
-    </div>
 
     <div class="w-100 m-10">
         <v-sheet class="mx-auto bg-cyan-darken-4 pa-8" width="400" rounded>
@@ -168,6 +158,45 @@
 
     </div>
 
+    <div class="m-10">
+        <v-container>
+            <v-card>
+                <v-card-title>
+                    <div class="text-label-medium text-uppercase my-1">Progress</div>
+
+                    <div class="text-green-darken-3 text-display-medium font-weight-bold">90%</div>
+
+                    <div class="text-title-large text-medium-emphasis font-weight-regular">
+                        $2,938.00 remaining
+                    </div>
+                </v-card-title>
+                <v-card-text class="pt-2 mt-8">
+                    <div :style="`right: calc(${review} - 32px)`"
+                        class="position-absolute mt-n8 text-body-small text-green-darken-3">
+                        Eligibility review
+                    </div>
+                    <v-progress-linear color="green-darken-3" height="22" model-value="90" rounded="lg">
+                        <v-badge :style="`right: ${review}`" class="position-absolute" color="white" dot
+                            inline></v-badge>
+                    </v-progress-linear>
+
+                    <div class="d-flex justify-space-between py-3">
+                        <span class="text-green-darken-3 font-weight-medium">
+                            $26,442.00 remitted
+                        </span>
+
+                        <span class="text-medium-emphasis"> $29,380.00 total </span>
+                    </div>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-list-item append-icon="mdi-chevron-right" lines="two" subtitle="Details and agreement"
+                    link></v-list-item>
+            </v-card>
+        </v-container>
+    </div>
+
 
 </template>
 
@@ -175,6 +204,7 @@
 import { ref } from 'vue'
 
 const reveal = ref(false)
+const review = '30%'
 
 const labels = { 0: 'SU', 1: 'MO', 2: 'TU', 3: 'WED', 4: 'TH', 5: 'FR', 6: 'SA' }
 const forecast = [
