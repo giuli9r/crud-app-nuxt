@@ -43,7 +43,13 @@
                         <td class="py-3 px-4 text-sm text-gray-700">{{ employee.salary }}</td>
                         <td class="py-3 px-4 text-sm text-gray-700">
                             <div class="flex items-center gap-[10px]">
-                                <NuxtLink :to="`/employee/edit/${employee.id}`">
+                                <NuxtLink :to="`/view?id=${employee.id}`">
+                                    <button
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-4 rounded transition">
+                                        View
+                                    </button>
+                                </NuxtLink>
+                                <NuxtLink :to="`/edit?id=${employee.id}`">
                                     <button
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded transition">
                                         Edit
@@ -93,13 +99,13 @@ export default {
                 }
             }
         },
-        deleteEmployee(employee) {
+        deleteEmployee(selected) {
             if (typeof window !== 'undefined') {
                 try {
-                    console.log(`Deleting emplployee: ${employee.id}`);
-                    if (confirm(`Are you sure you want to delete ${employee.first_name} ${employee.last_name}?`)) {
+                    console.log(`Deleting emplployee: ${selected.id}`);
+                    if (confirm(`Are you sure you want to delete ${selected.first_name} ${selected.last_name}?`)) {
                         const employees = JSON.parse(localStorage.getItem('employees') || '[]');
-                        const updatedEmployees = employees.filter(employee => employee.id !== id);
+                        const updatedEmployees = employees.filter(employee => employee.id !== selected.id);
                         localStorage.setItem('employees', JSON.stringify(updatedEmployees));
                         this.loadEmployees();
                     }
